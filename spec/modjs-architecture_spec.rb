@@ -1,7 +1,13 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require "spec_helper.rb"
 
-describe "ModjsArchitecture" do
-  it "fails" do
-    fail "hey buddy, you should probably rename this file and start specing for real"
+describe ModJS::Project do
+
+  before :each do
+    @project = ModJS::Project.new( { name: 'myapp' }, TMP_DIR)
   end
+
+  it 'should have the correct directories' do
+    @project.directories.should == %w'application elements lib models modules plugins spec'
+  end
+
 end
