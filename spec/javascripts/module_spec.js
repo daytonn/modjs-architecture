@@ -47,6 +47,30 @@ describe("Mod.Module", function() {
     });
 
     it("should have an elements method to cache DOM elements", function() {
-        // Need to test DOM before this will work
+        module.elements({
+            body: document.getElementsByTagName('body')[0],
+            jasmine_content: document.getElementById('jasmine_content')
+        });
+        expect(module.elements('body')).toEqual(document.getElementsByTagName('body')[0]);
+        expect(module.elements('jasmine_content')).toEqual(document.getElementById('jasmine_content'));
+    });
+
+    it("should get all the elements", function() {
+        module.elements({
+            body: document.getElementsByTagName('body')[0],
+            jasmine_content: document.getElementById('jasmine_content')
+        });
+        expect(module.elements()).toEqual({
+            body: document.getElementsByTagName('body')[0],
+            jasmine_content: document.getElementById('jasmine_content')
+        });
+    });
+
+    it("should run the execute method when the dom is ready", function() {
+        module.actions = function() {
+            this.set_data('actions_did_run', true);
+            expect(module.data.actions_did_run).toBeTruthy();
+        };
+        module.run();
     });
 });
