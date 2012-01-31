@@ -17,7 +17,6 @@ describe("Mod.js", function() {
       hex_int_string = "0xFF",
       hex_int = 0xFFF,
       number = 42,
-      nan = NaN,
       neg_int = -16,
       neg_int_string = "-10",
       neg_float_string = "-1.6",
