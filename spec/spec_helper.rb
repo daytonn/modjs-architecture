@@ -40,3 +40,4 @@ end
 SPEC_DIR = File.expand_path File.dirname(__FILE__)
 TMP_DIR = "#{SPEC_DIR}/tmp"
 FIXTURES = "#{SPEC_DIR}/fixtures"
+MODJS_ROOT = File.expand_path('../', SPEC_DIR)
