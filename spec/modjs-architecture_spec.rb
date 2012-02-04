@@ -39,6 +39,11 @@ describe ModJS::Project do
       File.exists?("#{TMP_DIR}/spec").should be_true
     end
 
+    it 'should create the architecture file' do
+      File.exists?("#{TMP_DIR}/myapp.architecture").should be_true
+      "#{TMP_DIR}/myapp.architecture".should be_same_file_as "#{FIXTURES}/myapp.architecture"
+    end
+
     it 'should create an application file in the build_dir' do
       "#{TMP_DIR}/application/myapp.js".should be_same_file_as "#{FIXTURES}/myapp.js"
     end
@@ -63,4 +68,33 @@ describe ModJS::Project do
     end
   end
 
+  describe 'project update' do
+  
+    before :each do
+      suppress_output do
+        @project = ModJS::Project.new( { name: 'myapp' }, TMP_DIR)
+        @project.create
+      end
+
+      FileUtils.rm_rf "#{TMP_DIR}/myapp.architecture"
+      FileUtils.cp "#{FIXTURES}/update.architecture", "#{TMP_DIR}/myapp.architecture"
+      FileUtils.cp "#{FIXTURES}/test.module.js", "#{TMP_DIR}/modules/test.module.js"
+
+      suppress_output do
+        @project.update
+      end
+    end
+
+    after :each do
+      FileUtils.rm_rf(TMP_DIR)
+    end
+
+    it 'should compile the application file' do
+      "#{TMP_DIR}/application/myapp.js".should be_same_file_as "#{FIXTURES}/update.js"
+    end
+
+    it 'should compile the test module' do
+      "#{TMP_DIR}/application/test.js".should be_same_file_as "#{FIXTURES}/test.js"
+    end
+  end
 end
