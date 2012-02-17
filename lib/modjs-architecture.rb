@@ -7,8 +7,6 @@ module ModJS
     ArchitectureJS::register_framework 'modjs', self
 
     def initialize(config, root = nil)
-      raise "#{self.class}.new({ name: 'myapp' }, options): config[:name] is undefined" unless config[:name]
-
       @config = {
         framework: 'modjs',
         src_dir: 'modules',
