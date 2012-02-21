@@ -2,13 +2,13 @@ module ModJS
   BASE_DIR = File.expand_path("../..", __FILE__)
   LIB_DIR = "#{BASE_DIR}/lib/modjs-architecture/lib"
 
-  class Project < ArchitectureJS::Project
+  class Blueprint < ArchitectureJS::Blueprint
     # this line adds the default framework to ArchitectureJS
-    ArchitectureJS::register_framework 'modjs', self
+    ArchitectureJS::register_blueprint 'modjs', self
 
     def initialize(config, root = nil)
       @config = {
-        framework: 'modjs',
+        blueprint: 'modjs',
         src_dir: 'modules',
         build_dir: 'application',
         dependencies: [],
@@ -106,7 +106,8 @@ module ModJS
         root: ModJS::BASE_DIR,
         asset_root: File.expand_path(@config[:asset_root], @root),
         load_path: ['repository'],
-        source_files: [file]
+        source_files: [file],
+        interpolate_constants: false
       )
 
       application_file = sprockets.concatenation
@@ -114,7 +115,7 @@ module ModJS
       sprockets.install_assets
     rescue Exception => error
       @errors = true
-      puts ModJS::Notification.error "Sprockets error: #{error.message}"
+      puts ArchitectureJS::Notification.error "Sprockets error: #{error.message}"
     end
   end # class Project
 end # module ArchitectureJS
