@@ -15,7 +15,7 @@ module ModJS
         autoload: []
       }
       @config.merge! config unless config.nil?
-
+      # TODO add default template directory and templates
       super(@config, root)
       @directories = %w'application elements lib models modules plugins spec'
     end
