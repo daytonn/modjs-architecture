@@ -56,7 +56,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  architecture-js (~> 0.1.11)
+  architecture-js
   bundler (~> 1.0.0)
   jasmine (~> 1.1.2)
   jeweler (~> 1.8.3)

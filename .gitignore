@@ -43,3 +43,4 @@ pkg
 
 .idea/
 spec/.DS_Store
+Gemfile.lock
