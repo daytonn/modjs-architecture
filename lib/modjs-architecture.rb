@@ -1,3 +1,13 @@
+module ArchitectureJS
+  class Generator
+    def generate_file(filename, template, path = nil)
+      path ||= File.expand_path(Dir.getwd)
+      filename = filename.gsub(/\.js$/, '.module.js')
+      File.open("#{path}/#{filename}", "w+") { |f| f.write template }
+    end
+  end
+end
+
 module ModJS
 
   def base_dir
