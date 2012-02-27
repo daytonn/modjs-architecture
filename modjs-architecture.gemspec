@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "modjs-architecture"
-  s.version = "0.1.6"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
-  s.date = "2012-02-21"
+  s.date = "2012-02-27"
   s.description = "Mod.js is a modular javascript library that provides a base application strucure to build large javascript applications. Mod.js is designed to work with architecture.js."
   s.email = "daytonn@gmail.com"
   s.extra_rdoc_files = [
@@ -38,14 +38,18 @@ Gem::Specification.new do |s|
     "lib/modjs-architecture/jasmine/jasmine.js",
     "lib/modjs-architecture/jasmine/jasmine_favicon.png",
     "lib/modjs-architecture/lib/mod.js",
-    "lib/modjs-architecture/modjs.architecture",
+    "lib/modjs-architecture/modjs.blueprint",
     "lib/modjs-architecture/src/mod.js",
     "modjs-architecture.gemspec",
-    "spec/fixtures/myapp.architecture",
+    "spec/fixtures/foo.js",
+    "spec/fixtures/foo_all.js",
+    "spec/fixtures/foo_elements.js",
+    "spec/fixtures/foo_model.js",
+    "spec/fixtures/myapp.blueprint",
     "spec/fixtures/myapp.js",
     "spec/fixtures/test.js",
     "spec/fixtures/test.module.js",
-    "spec/fixtures/update.architecture",
+    "spec/fixtures/update.blueprint",
     "spec/fixtures/update.js",
     "spec/javascripts/application_spec.js",
     "spec/javascripts/dom_spec.js",
@@ -56,7 +60,10 @@ Gem::Specification.new do |s|
     "spec/javascripts/support/jasmine_config.rb",
     "spec/javascripts/support/jasmine_runner.rb",
     "spec/modjs-architecture_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/templates_spec.rb",
+    "templates/model.js",
+    "templates/module.js"
   ]
   s.homepage = "http://github.com/daytonn/modjs-architecture"
   s.licenses = ["MIT"]
