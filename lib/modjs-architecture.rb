@@ -39,7 +39,9 @@ module ModJS
 
     def get_file_name(module_path)
       module_file = module_path.split(/[\\\/]/).last
-      module_filename = module_file.gsub(/\.module\.js$/, '')
+
+      module_filename = module_file.gsub(/\.module\.js$/, '') if module_file.match /\.module\.js$/
+      module_filename = module_file.gsub(/\.js$/, '')
     end
 
     def create_application_file
