@@ -84,6 +84,13 @@ module ModJS
       super
     end
 
+    def compile_src_files
+      @src_files.each do |file_path|
+        file_name = get_file_name file_path.gsub(/\.module\.js$/, '.js')
+        compile_src_file file_path, file_name
+      end
+    end
+
     def update_application_file
       app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name]}.js"
 

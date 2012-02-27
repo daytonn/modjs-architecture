@@ -25,7 +25,7 @@ describe "ModJS templates" do
 
     @project.generator.generate(config)
     File.exists?("#{TMP_DIR}/foo.js").should be_true
-    "#{TMP_DIR}/foo.js".should be_same_file_as "#{FIXTURES}/foo.js"
+    "#{TMP_DIR}/foo.module.js".should be_same_file_as "#{FIXTURES}/foo.js"
   end
 
   it 'should render a module with elements' do
@@ -37,8 +37,8 @@ describe "ModJS templates" do
     }
 
     @project.generator.generate(config)
-    File.exists?("#{TMP_DIR}/foo_elements.js").should be_true
-    "#{TMP_DIR}/foo_elements.js".should be_same_file_as "#{FIXTURES}/foo_elements.js"
+    File.exists?("#{TMP_DIR}/foo_elements.module.js").should be_true
+    "#{TMP_DIR}/foo_elements.module.js".should be_same_file_as "#{FIXTURES}/foo_elements.js"
   end
 
   it 'should render a module with a model' do
@@ -50,8 +50,8 @@ describe "ModJS templates" do
     }
 
     @project.generator.generate(config)
-    File.exists?("#{TMP_DIR}/foo_model.js").should be_true
-    "#{TMP_DIR}/foo_model.js".should be_same_file_as "#{FIXTURES}/foo_model.js"
+    File.exists?("#{TMP_DIR}/foo_model.module.js").should be_true
+    "#{TMP_DIR}/foo_model.module.js".should be_same_file_as "#{FIXTURES}/foo_model.js"
   end
 
   it 'should render a module with both a model and elements' do
@@ -63,8 +63,8 @@ describe "ModJS templates" do
     }
 
     @project.generator.generate(config)
-    File.exists?("#{TMP_DIR}/foo_all.js").should be_true
-    "#{TMP_DIR}/foo_all.js".should be_same_file_as "#{FIXTURES}/foo_all.js"
+    File.exists?("#{TMP_DIR}/foo_all.module.js").should be_true
+    "#{TMP_DIR}/foo_all.module.js".should be_same_file_as "#{FIXTURES}/foo_all.js"
   end
 
 end
