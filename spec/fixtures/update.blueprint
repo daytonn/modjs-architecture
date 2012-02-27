@@ -1,4 +1,4 @@
-framework: modjs
+blueprint: modjs
 src_dir: modules
 build_dir: application
 asset_root: ../

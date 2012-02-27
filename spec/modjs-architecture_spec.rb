@@ -1,15 +1,15 @@
 require "spec_helper.rb"
 
-describe ModJS::Project do
+describe ModJS::Blueprint do
 
   describe "defaults" do
 
     before :each do
-      suppress_output { @project = ModJS::Project.new( { name: 'myapp' }, TMP_DIR) }
+      suppress_output { @project = ModJS::Blueprint.new( { name: 'myapp' }, TMP_DIR) }
     end
 
-    it 'should have a BASE_DIR constant' do
-      ModJS::BASE_DIR = MODJS_ROOT
+    it 'should have a base_dir' do
+      ModJS::base_dir.should == MODJS_ROOT
     end
     
     it 'should have the correct directories' do
@@ -20,7 +20,7 @@ describe ModJS::Project do
   describe 'project creation' do
     before :each do
       suppress_output do
-        @project = ModJS::Project.new( { name: 'myapp' }, TMP_DIR)
+        @project = ModJS::Blueprint.new( { name: 'myapp' }, TMP_DIR)
         @project.create
       end
     end
@@ -39,9 +39,9 @@ describe ModJS::Project do
       File.exists?("#{TMP_DIR}/spec").should be_true
     end
 
-    it 'should create the architecture file' do
-      File.exists?("#{TMP_DIR}/myapp.architecture").should be_true
-      "#{TMP_DIR}/myapp.architecture".should be_same_file_as "#{FIXTURES}/myapp.architecture"
+    it 'should create the blueprint file' do
+      File.exists?("#{TMP_DIR}/myapp.blueprint").should be_true
+      "#{TMP_DIR}/myapp.blueprint".should be_same_file_as "#{FIXTURES}/myapp.blueprint"
     end
 
     it 'should create an application file in the build_dir' do
@@ -49,7 +49,7 @@ describe ModJS::Project do
     end
 
     it 'should copy the core library into the lib folder' do
-      "#{TMP_DIR}/lib/mod.js".should be_same_file_as "#{ModJS::LIB_DIR}/mod.js"
+      "#{TMP_DIR}/lib/mod.js".should be_same_file_as "#{ModJS::lib_dir}/mod.js"
     end
 
     it 'should copy the jasmine tests into the spec folder' do
@@ -72,12 +72,12 @@ describe ModJS::Project do
   
     before :each do
       suppress_output do
-        @project = ModJS::Project.new( { name: 'myapp' }, TMP_DIR)
+        @project = ModJS::Blueprint.new( { name: 'myapp' }, TMP_DIR)
         @project.create
       end
 
-      FileUtils.rm_rf "#{TMP_DIR}/myapp.architecture"
-      FileUtils.cp "#{FIXTURES}/update.architecture", "#{TMP_DIR}/myapp.architecture"
+      FileUtils.rm_rf "#{TMP_DIR}/myapp.blueprint"
+      FileUtils.cp "#{FIXTURES}/update.blueprint", "#{TMP_DIR}/myapp.blueprint"
       FileUtils.cp "#{FIXTURES}/test.module.js", "#{TMP_DIR}/modules/test.module.js"
 
       suppress_output do
@@ -97,4 +97,5 @@ describe ModJS::Project do
       "#{TMP_DIR}/application/test.js".should be_same_file_as "#{FIXTURES}/test.js"
     end
   end
+
 end

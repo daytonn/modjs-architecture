@@ -1,6 +1,14 @@
 module ModJS
-  BASE_DIR = File.expand_path("../..", __FILE__)
-  LIB_DIR = "#{BASE_DIR}/lib/modjs-architecture/lib"
+
+  def base_dir
+    File.expand_path("../..", __FILE__)
+  end
+
+  def lib_dir
+    "#{ModJS::base_dir}/lib/modjs-architecture/lib"
+  end
+
+  module_function :base_dir, :lib_dir
 
   class Blueprint < ArchitectureJS::Blueprint
     # this line adds the default framework to ArchitectureJS
@@ -15,8 +23,10 @@ module ModJS
         autoload: []
       }
       @config.merge! config unless config.nil?
-      # TODO add default template directory and templates
+
       super(@config, root)
+
+      add_templates "#{ModJS::base_dir}/templates"
       @directories = %w'application elements lib models modules plugins spec'
     end
 
@@ -34,26 +44,26 @@ module ModJS
 
     def create_application_file
       app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name]}.js"
-      FileUtils.cp "#{LIB_DIR}/mod.js", app_file
+      FileUtils.cp "#{ModJS::lib_dir}/mod.js", app_file
       File.open(app_file, 'a') { |f| f.write("\nvar #{@config[:name]} = new Mod.Application('#{@config[:name]}');") }
     end
 
     def copy_modjs_core_to_lib
-      FileUtils.cp "#{LIB_DIR}/mod.js", "#{@root}/lib/"
+      FileUtils.cp "#{ModJS::lib_dir}/mod.js", "#{@root}/lib/"
     end
 
     def copy_spec_files
       FileUtils.mkdir "#{@root}/spec/jasmine"
-      FileUtils.cp "#{ModJS::BASE_DIR}/spec/javascripts/application_spec.js", "#{@root}/spec/application_spec.js"
-      FileUtils.cp "#{ModJS::BASE_DIR}/spec/javascripts/dom_spec.js", "#{@root}/spec/dom_spec.js"
-      FileUtils.cp "#{ModJS::BASE_DIR}/spec/javascripts/existence_spec.js", "#{@root}/spec/existence_spec.js"
-      FileUtils.cp "#{ModJS::BASE_DIR}/spec/javascripts/module_spec.js", "#{@root}/spec/module_spec.js"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/jasmine-html.js", "#{@root}/spec/jasmine/"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/jasmine.css", "#{@root}/spec/jasmine/"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/jasmine.js", "#{@root}/spec/jasmine/"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/jasmine_favicon.png", "#{@root}/spec/jasmine/"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/MIT.LICENSE", "#{@root}/spec/jasmine/"
-      FileUtils.cp "#{ModJS::BASE_DIR}/lib/modjs-architecture/jasmine/index.html", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/spec/javascripts/application_spec.js", "#{@root}/spec/application_spec.js"
+      FileUtils.cp "#{ModJS::base_dir}/spec/javascripts/dom_spec.js", "#{@root}/spec/dom_spec.js"
+      FileUtils.cp "#{ModJS::base_dir}/spec/javascripts/existence_spec.js", "#{@root}/spec/existence_spec.js"
+      FileUtils.cp "#{ModJS::base_dir}/spec/javascripts/module_spec.js", "#{@root}/spec/module_spec.js"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/jasmine-html.js", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/jasmine.css", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/jasmine.js", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/jasmine_favicon.png", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/MIT.LICENSE", "#{@root}/spec/jasmine/"
+      FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/index.html", "#{@root}/spec/jasmine/"
     end
 
     def update
@@ -103,7 +113,7 @@ module ModJS
 
     def compile_application_file(file)
       sprockets = Sprockets::Secretary.new(
-        root: ModJS::BASE_DIR,
+        root: ModJS::base_dir,
         asset_root: File.expand_path(@config[:asset_root], @root),
         load_path: ['repository'],
         source_files: [file],
