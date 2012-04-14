@@ -12,8 +12,8 @@ group :test do
 end
 
 group :development do
-  gem "rspec", "~> 2.8.0"
-  gem "bundler", "~> 1.0.0"
+  gem "rspec"
+  gem "bundler"
   gem "jeweler", "~> 1.8.3"
-  gem "jasmine", "~> 1.1.2"
+  gem "jasmine"
 end
