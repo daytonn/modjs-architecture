@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "modjs-architecture"
-  s.version = "0.3.3"
+  s.version = "0.3.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
@@ -69,28 +69,6 @@ Gem::Specification.new do |s|
     "spec/modjs-architecture_spec.rb",
     "spec/spec_helper.rb",
     "spec/templates_spec.rb",
-    "spec/tmp/application/myapp.js",
-    "spec/tmp/application/test.js",
-    "spec/tmp/application/test.module.js",
-    "spec/tmp/foo-elements.js",
-    "spec/tmp/foo.js",
-    "spec/tmp/foo_all.js",
-    "spec/tmp/foo_elements.js",
-    "spec/tmp/foo_model.js",
-    "spec/tmp/lib/mod.js",
-    "spec/tmp/modules/test.module.js",
-    "spec/tmp/myapp.architecture",
-    "spec/tmp/myapp.blueprint",
-    "spec/tmp/spec/application_spec.js",
-    "spec/tmp/spec/dom_spec.js",
-    "spec/tmp/spec/existence_spec.js",
-    "spec/tmp/spec/jasmine/MIT.LICENSE",
-    "spec/tmp/spec/jasmine/index.html",
-    "spec/tmp/spec/jasmine/jasmine-html.js",
-    "spec/tmp/spec/jasmine/jasmine.css",
-    "spec/tmp/spec/jasmine/jasmine.js",
-    "spec/tmp/spec/jasmine/jasmine_favicon.png",
-    "spec/tmp/spec/module_spec.js",
     "templates/model.js",
     "templates/module.js"
   ]
@@ -105,25 +83,25 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<architecture-js>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_development_dependency(%q<jasmine>, ["~> 1.1.2"])
+      s.add_development_dependency(%q<jasmine>, [">= 0"])
       s.add_runtime_dependency(%q<architecture-js>, [">= 0"])
     else
       s.add_dependency(%q<architecture-js>, [">= 0"])
-      s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_dependency(%q<jasmine>, ["~> 1.1.2"])
+      s.add_dependency(%q<jasmine>, [">= 0"])
       s.add_dependency(%q<architecture-js>, [">= 0"])
     end
   else
     s.add_dependency(%q<architecture-js>, [">= 0"])
-    s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-    s.add_dependency(%q<jasmine>, ["~> 1.1.2"])
+    s.add_dependency(%q<jasmine>, [">= 0"])
     s.add_dependency(%q<architecture-js>, [">= 0"])
   end
 end
