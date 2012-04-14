@@ -22,12 +22,12 @@ describe "ModJS templates" do
       filename: 'foo',
       options: {}
     }
-
-    @project.generator.generate(config)
-    File.exists?("#{TMP_DIR}/foo.js").should be_true
+  
+    suppress_output { @project.generator.generate(config) }
+    File.exists?("#{TMP_DIR}/foo.module.js").should be_true
     "#{TMP_DIR}/foo.module.js".should be_same_file_as "#{FIXTURES}/foo.js"
   end
-
+  
   it 'should render a module with elements' do
     config = {
       arguments: ['module', 'foo_elements', '-e'],
@@ -35,12 +35,12 @@ describe "ModJS templates" do
       filename: 'foo_elements',
       options: { e: true }
     }
-
-    @project.generator.generate(config)
+  
+    suppress_output { @project.generator.generate(config) }
     File.exists?("#{TMP_DIR}/foo_elements.module.js").should be_true
     "#{TMP_DIR}/foo_elements.module.js".should be_same_file_as "#{FIXTURES}/foo_elements.js"
   end
-
+  
   it 'should render a module with a model' do
     config = {
       arguments: ['module', 'foo_model', '-m'],
@@ -48,12 +48,12 @@ describe "ModJS templates" do
       filename: 'foo_model',
       options: { m: true }
     }
-
-    @project.generator.generate(config)
+  
+    suppress_output { @project.generator.generate(config) }
     File.exists?("#{TMP_DIR}/foo_model.module.js").should be_true
     "#{TMP_DIR}/foo_model.module.js".should be_same_file_as "#{FIXTURES}/foo_model.js"
   end
-
+  
   it 'should render a module with both a model and elements' do
     config = {
       arguments: ['module', 'foo_all', '-e', '-m'],
@@ -61,10 +61,22 @@ describe "ModJS templates" do
       filename: 'foo_all',
       options: { e: true, m: true }
     }
-
-    @project.generator.generate(config)
+  
+    suppress_output { @project.generator.generate(config) }
     File.exists?("#{TMP_DIR}/foo_all.module.js").should be_true
     "#{TMP_DIR}/foo_all.module.js".should be_same_file_as "#{FIXTURES}/foo_all.js"
   end
 
+  it 'should render a module partial with the correct module name' do
+    config = {
+      arguments: ['module', '_foo'],
+      template: 'module',
+      filename: '_foo',
+      options: {}
+    }
+  
+    suppress_output { @project.generator.generate(config) }
+    File.exists?("#{TMP_DIR}/_foo.module.js").should be_true
+    "#{TMP_DIR}/_foo.module.js".should be_same_file_as "#{FIXTURES}/foo.js"
+  end
 end

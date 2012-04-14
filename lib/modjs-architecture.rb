@@ -4,7 +4,7 @@ module ArchitectureJS
       path ||= File.expand_path(Dir.getwd)
       filename = filename.gsub(/\.js$/, '.module.js')
       File.open("#{path}/#{filename}", "w+") { |f| f.write template }
-      puts ArchitectureJS::Notification.added "#{filename} #{template} added" if File.exists?("#{path}/#{filename}")
+      puts ArchitectureJS::Notification.added "#{filename} added" if File.exists?("#{path}/#{filename}")
     end
   end
 end

@@ -1,8 +1,0 @@
-blueprint: modjs
-src_dir: modules
-build_dir: application
-asset_root: ../
-output: compressed
-dependencies: []
-autoload: []
-name: myapp
