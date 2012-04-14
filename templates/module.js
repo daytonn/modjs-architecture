@@ -1,5 +1,5 @@
 (function(app) {
-    var m = app.add_module("<%= arguments[1] %>");
+    var m = app.add_module("<%= arguments[1].gsub(/^_/, '') %>");
 <% if options[:e] %>
 
     //= require "../elements/<%= arguments[1] %>.elements"

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Spec Runner: ModJS</title>
+
+  <link rel="shortcut icon" type="image/png" href="jasmine_favicon.png">
+  <link rel="stylesheet" href="jasmine.css" />
+  <script src="jasmine.js"></script>
+  <script src="jasmine-html.js"></script>
+
+  <!-- ModJS source files -->
+  <script src="../../lib/mod.js"></script>
+
+  <!-- spec files -->
+  <script src="../application_spec.js"></script>
+  <script src="../dom_spec.js"></script>
+  <script src="../existence_spec.js"></script>
+  <script src="../module_spec.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+        var jasmineEnv = jasmine.getEnv(),
+            trivialReporter = new jasmine.TrivialReporter(),
+            currentWindowOnload = window.onload;
+
+        jasmineEnv.updateInterval = 1000;
+        jasmineEnv.addReporter(trivialReporter);
+
+        jasmineEnv.specFilter = function(spec) {
+            return trivialReporter.specFilter(spec);
+        };
+
+        window.onload = function() {
+            if (currentWindowOnload) {
+                currentWindowOnload();
+            }
+
+            execJasmine();
+        };
+
+        function execJasmine() {
+            jasmineEnv.execute();
+        }
+
+    })();
+  </script>
+</head>
+<body></body>
+</html>
