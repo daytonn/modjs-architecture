@@ -2,7 +2,17 @@
 
 ##About
 
-Mod.js is a Javascript framework built specifically for the [ArchitectureJS](https://github.com/daytonn/architecture-js "ArchitectureJS") engine although it can be used as a stand-alone framework.
+Mod.js is a Javascript framework built specifically for the [ArchitectureJS](https://github.com/daytonn/architecture-js "ArchitectureJS") engine although it can be used as a stand-alone framework. Modjs focuses on creating a very lean application skeleton with a minimum of methods to help you manage complex javascript applications.
+
+## Installation
+Requires ruby version 1.9 or higher. The best way is using rubygems:
+
+    gem install modjs-architecture
+
+Or include it in your project's Gemfile with Bundler:
+
+    gem 'modjs-architecture'
+
 
 ###contributing to architecture.js
  
