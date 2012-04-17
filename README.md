@@ -30,11 +30,43 @@ The application object really couldn't be much simpler. It has one method and on
 ```
 
 ## Modules
-Modules are the heart of a modjs application. They're not exactly controllers and they're not exactly classes but they share a lot of the same responsibilities as you'd expect from these classical constructs. Modules are based on the typical browser-based workflow. Wait for the DOM, when it's ready attach events, setup plugins, and ajax the shit out of it.
+Modules are the heart of a modjs application. They're not exactly controllers and they're not exactly classes but they share a lot of the same responsibilities as you'd expect from these classical constructs. Modules are based on the typical browser-based workflow. Wait for the DOM, when it's ready attach events, setup plugins, and ajax the shit out of it, etc.
 
 Mod.js modules encapsulate this common pattern and create a coherent way to design and create javascript solutions. Modules are only slightly more sophisticated than the application object itself. A modules two main method's are actions and run.
 
-Calling run will wait for the dom to be loaded and then call the actions method. By default, the actions method does nothing. You will provide the code for the actions method. The actions method is a composed method
+Calling run will wait for the dom to be loaded and then call the actions method. By default, the actions method does nothing. You will provide the code for the actions method. The actions method should follow the composed method pattern, a simple list of functions to call when the dom is ready. An example of a typical module looks something like this:
+
+```js
+    (function(app) {
+        var m = app.add_module('dashboard');
+
+        m.actions = function() {
+            setup_tabbed_navigation();
+            open_external_links_in_new_tab();
+        };
+
+        m.run();
+
+        // Private methods
+
+        function setup_tabbed_navigation() {
+            $('#navigation').tabs();
+        }
+
+        function open_external_links_in_new_tab() {
+            var links = $('a');
+            var re_local = new RegExp(location.hostname);
+            var external_links = links.filter(function(i, link) {
+                if (is_defined($(link).attr('href'))) {
+                    if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
+                        return true;
+                    }
+                }
+            });
+            external_links.attr('target', '_blank');
+        }
+    })(myapp);
+```
 
 ###contributing to modjs-architecture
  
