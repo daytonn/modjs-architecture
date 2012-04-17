@@ -72,9 +72,9 @@ This probably looks similar to the code you write currently, Mod.js simply makes
 
 Notice that the entire module is wrapped in a closure. This creates a private scope specific to this module. Public methods and properties can be created by attaching them to the module, private properties and methods are simply defined inside the closure, with no connection to the global scope. Also notice that the application object is passed into the closure and aliased as `app`. This means if application name changes or you wish to copy this module into another application, you only need to change the name in one place. It also has the added advantage of being short when referencing the namespace.
 
-Next is the module instantiation: `var m = app.add_module('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, we won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
+Next is the module instantiation: `var m = app.add_module('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, you won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
 
-Next we see the `actions` method declaration. This is where we put all the code we wish to run when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If we wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
+Next, see the `actions` method declaration. This is where to put all the code which runs when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If you wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
 
 ```js
 (function(app) {
@@ -106,7 +106,7 @@ Next we see the `actions` method declaration. This is where we put all the code 
 })(myapp);
 ```
 
-This makes these methods available publicly through the application namespace. For example, if we wanted to call the `open_external_links_in_new_tab` in another module, we could do the following:
+This makes these methods available publicly through the application namespace. For example, to call `open_external_links_in_new_tab` from another module, do the following:
 
 ```js
 (function(app){
@@ -133,7 +133,7 @@ ArchitectureJS is a build system for javascript that is similar to the [compass]
 To learn more about using ArchitectureJS visit [https://github.com/daytonn/architecture-js](https://github.com/daytonn/architecture-js)
 
 ## Requiring support files
-The modules and application directories contain the main scripts of your application, you may be wondering what all the other folders are used for. Using the Sprockets `//= require` directive, we can include scripts from these other directories into our modules and application file. This let's us divide our code into logical pieces on the filesystem. Let's look at an example of using the require directive in the `dashboard` module we defined earlier:
+The modules and application directories contain the main scripts of your application, you may be wondering what all the other folders are used for. Using the Sprockets `//= require` directive, you can include scripts from these other directories into the modules or application file. This let's us divide code into logical pieces on the filesystem. Let's look at an example of using the require directive in the `dashboard` module used earlier:
 
 ```js
 //= require "../plugins/foo"
@@ -145,13 +145,13 @@ The modules and application directories contain the main scripts of your applica
 })(myapp);
 ```
 
-This module assumes that a `foo.js` file exists inside the `plugins` directory. This line will find that file and include it in the dashboard.js file that is compiled into the application directory. Notice that the file is referenced from the application folder so the `require` line needs the `../` prepended to the path. Also notice that we do not need to add the `.js` because Sprockets only compiles javascript files. In this way you can manage all the dependencies of a given module without including another script tag in your application.
+This module assumes that a `foo.js` file exists inside the `plugins` directory. This line will find that file and include it in the dashboard.js file that is compiled into the application directory. Notice that the file is referenced from the application folder so the `require` line needs the `../` prepended to the path. Also notice that you do not need to add the `.js` because Sprockets only compiles javascript files. In this way you can manage all the dependencies of a given module without including another script tag in your application.
 
 The plugins, lib, and test directories are just arbitrary folders for various script assets. The elements and models directories have special meaning to the modjs framework.
 
 ## Elements
 
-In this day and age of javascript programming, it seems everyone starts with a DOM polyfill like jQuery or Prototype. Using these frameworks, it's become practice to cache the DOM selections so the element can be referenced many times without querying the DOM again. In practice this means that our code tends to be littered with statements querying the DOM for specific elements to be acted on. At best they are all defined in one place. At worst they are strewn about the code making it easy for teams to duplicate effort and create inefficient code. Either way it can end up creating a lot of noise in our scripts amd can become hard to manage. Mod.js solves this problem by using `//= require` to separate the DOM selections from the module file that uses those elements to define behavior. This keeps our module file clean and only concerned with behavior. Let's take a look at how this might look in practice, again using the `dashboard` module example:
+In this day and age of javascript programming, it seems everyone starts with a DOM polyfill like jQuery or Prototype. Using these frameworks, it's become practice to cache the DOM selections so the element can be referenced many times without querying the DOM again. In practice this means that the code tends to be littered with statements querying the DOM for specific elements to be acted on. At best they are all defined in one place. At worst they are strewn about the code making it easy for teams to duplicate effort and create inefficient code. Either way it can end up creating a lot of noise in scripts and can become hard to manage. Mod.js solves this problem by using `//= require` to separate the DOM selections from the module file that uses those elements to define behavior. This keeps the module file clean and only concerned with behavior. Let's take a look at how this might look in practice, again using the `dashboard` module example:
 
 ```js
 (function(app) {
@@ -177,13 +177,13 @@ We `require` the /elements/dashboard.elements.js _inside_ the module closure. Th
     });
 ```
 
-The elements method is defined by `Mod.Module` and simply let's you create an object hash of named selectors. To set an element property of a module simply provide an object with a key (name of the element property) and a cached selector (in this case a jQuery object). To retrieve the cached selector simply call `elements` and pass it the name of the element you wish to retrieve. To access the navigation element we've cached we would write this: 
+The elements method is defined by `Mod.Module` and simply let's you create an object hash of named selectors. To set an element property of a module simply provide an object with a key (name of the element property) and a cached selector (in this case a jQuery object). To retrieve the cached selector simply call `elements` and pass it the name of the element you wish to retrieve. To access the cached navigation element: 
 
 ```js
 m.elements('navigation'); // $('#navigation')
 ```
 
-Now we need to update the dashboard.module file to use the new cahced selectors:
+Now to update the dashboard.module file to use the new cahced selectors:
 
 ```js
 (function(app) {
@@ -216,7 +216,7 @@ Now we need to update the dashboard.module file to use the new cahced selectors:
 })(myapp);
 ```
 
-Notice in `setup_tabbed_navigation`, `$('#navigation')` became `m.elements('navigation')` and in `open_external_links_in_new_tab`, `$('a')` became `m.elements('links')`. Before you start thinking that this is overkill consider what this allows us to do. If we decide to swap out jQuery for another framework like Prototype, we have one place to change all the selections for all modules. Even if we don't ever change frameworks, this elements method can be extended to provide extra functionality. This wrapper technique helps us stay agile by abstracting the method of selection from the practice.
+Notice in `setup_tabbed_navigation`, `$('#navigation')` became `m.elements('navigation')` and in `open_external_links_in_new_tab`, `$('a')` became `m.elements('links')`. Before you start thinking that this is overkill consider what this allows us to do. If you decide to swap out jQuery for another framework like Prototype, there's one place to change all the selections for all modules. Even if you don't ever change frameworks, this elements method can be extended to provide extra functionality not provided by the framework. This wrapper technique helps us stay agile by abstracting the method of selection from the practice.
 
 ## Models ##
 
