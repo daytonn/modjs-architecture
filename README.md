@@ -122,9 +122,105 @@ This makes these methods available publicly through the application namespace. F
 
 You should avoid modules having knowledge of other modules, but it can be handy when solving certain kinds of problems. Most of the time you won't need too many publicly available methods so keeping them hidden to the global scope is a great idea.
 
-## ArchitectureJS and the Sprockets engine ##
+## ArchitectureJS and the Sprockets engine
 
-... To be continued
+Other than establishing a namespace and providing this simple module API, Mod.js does little else to influence how you write your application. Part of what makes Mod.js such a pleasure to work with is the ArchitectureJS build system and the Sprockets engine.
+
+Sprockets is a javascript concatenation engine, written in ruby (which eventually became the Rails asset pipeline). Sprockets allows you to concatenate scripts together using special comments called directives. These directives tell Sprockets to search for the file in the project's load path an include it in the compiled source. To learn more about Sprockets directives please view the [Sprockets documentation](http://daytonn.github.com/architecture-js/sprockets.html) on the ArchitectureJS website.
+
+ArchitectureJS is a build system for javascript that is similar to the [compass](https://github.com/chriseppstein/compass) css preprocessor. Using Sprockets directives, ArchitectureJS will compile your application scripts into the build directory with all of their dependencies included.
+
+To learn more about using ArchitectureJS visit [https://github.com/daytonn/architecture-js](https://github.com/daytonn/architecture-js)
+
+## Requiring support files
+The modules and application directories contain the main scripts of your application, you may be wondering what all the other folders are used for. Using the Sprockets `//= require` directive, we can include scripts from these other directories into our modules and application file. This let's us divide our code into logical pieces on the filesystem. Let's look at an example of using the require directive in the `dashboard` module we defined earlier:
+
+```js
+    //= require "../plugins/foo"
+
+    (function(app) {
+        var m = app.add_module('dashboard');
+
+        ...
+    })(myapp);
+```
+
+This module assumes that a `foo.js` file exists inside the `plugins` directory. This line will find that file and include it in the dashboard.js file that is compiled into the application directory. Notice that the file is referenced from the application folder so the `require` line needs the `../` prepended to the path. Also notice that we do not need to add the `.js` because Sprockets only compiles javascript files. In this way you can manage all the dependencies of a given module without including another script tag in your application.
+
+The plugins, lib, and test directories are just arbitrary folders for various script assets. The elements and models directories have special meaning to the modjs framework.
+
+## Elements
+
+In this day and age of javascript programming, it seems everyone starts with a DOM polyfill like jQuery or Prototype. Using these frameworks, it's become practice to cache the DOM selections so the element can be referenced many times without querying the DOM again. In practice this means that our code tends to be littered with statements querying the DOM for specific elements to be acted on. At best they are all defined in one place. At worst they are strewn about the code making it easy for teams to duplicate effort and create inefficient code. Either way it can end up creating a lot of noise in our scripts amd can become hard to manage. Mod.js solves this problem by using `//= require` to separate the DOM selections from the module file that uses those elements to define behavior. This keeps our module file clean and only concerned with behavior. Let's take a look at how this might look in practice, again using the `dashboard` module example:
+
+```js
+    (function(app) {
+        var m = app.add_module('dashboard');
+
+        //= require "../elements/dashboard.elements"
+
+        m.actions = function() {
+            setup_tabbed_navigation();
+            open_external_links_in_new_tab();
+        };
+
+        ...
+    })(myapp);
+```
+
+We `require` the /elements/dashboard.elements.js _inside_ the module closure. This is necessary to use the `m` variable that is only available inside the closure. Let's take a look at the dashboard.elements file and how it interacts with it's module:
+
+```js
+        m.elements({
+            navigation: $('#navigation'),
+            links: $('a')
+        });
+```
+
+The elements method is defined by `Mod.Module` and simply let's you create an object hash of named selectors. To set an element property of a module simply provide an object with a key (name of the element property) and a cached selector (in this case a jQuery object). To retrieve the cached selector simply call `elements` and pass it the name of the element you wish to retrieve. To access the navigation element we've cached we would write this: 
+
+```js
+    m.elements('navigation'); // $('#navigation')
+```
+
+Now we need to update the dashboard.module file to use the new cahced selectors:
+
+```js
+    (function(app) {
+        var m = app.add_module('dashboard');
+
+        m.actions = function() {
+            setup_tabbed_navigation();
+            open_external_links_in_new_tab();
+        };
+
+        m.run();
+
+        // Private methods
+
+        function setup_tabbed_navigation() {
+            m.navigation.tabs();
+        }
+
+        function open_external_links_in_new_tab() {
+            var re_local = new RegExp(location.hostname);
+            var external_links = m.elements('links').filter(function(i, link) {
+                if (is_defined($(link).attr('href'))) {
+                    if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
+                        return true;
+                    }
+                }
+            });
+            external_links.attr('target', '_blank');
+        }
+    })(myapp);
+```
+
+Notice in `setup_tabbed_navigation`, `$('#navigation')` became `m.elements('navigation')` and in `open_external_links_in_new_tab`, `$('a')` became `m.elements('links')`. Before you start thinking that this is overkill consider what this allows us to do. If we decide to swap out jQuery for another framework like Prototype, we have one place to change all the selections for all modules. Even if we don't ever change frameworks, this elements method can be extended to provide extra functionality. This wrapper technique helps us stay agile by abstracting the method of selection from the practice.
+
+## Models ##
+
+Coming soon...
 
 ###contributing to modjs-architecture
  
