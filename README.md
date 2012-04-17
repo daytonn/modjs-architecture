@@ -106,7 +106,7 @@ Next we see the `actions` method declaration. This is where we put all the code 
     })(myapp);
 ```
 
-    This makes these methods available publicly through the application namespace. For example, if we wanted to call the `open_external_links_in_new_tab` in another module, we could do the following:
+This makes these methods available publicly through the application namespace. For example, if we wanted to call the `open_external_links_in_new_tab` in another module, we could do the following:
 
 ```js
     (function(app){
@@ -121,6 +121,10 @@ Next we see the `actions` method declaration. This is where we put all the code 
 ```
 
 You should avoid modules having knowledge of other modules, but it can be handy when solving certain kinds of problems. Most of the time you won't need too many publicly available methods so keeping them hidden to the global scope is a great idea.
+
+## ArchitectureJS and the Sprockets engine ##
+
+... To be continued
 
 ###contributing to modjs-architecture
  
