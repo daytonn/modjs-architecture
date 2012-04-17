@@ -147,7 +147,7 @@ The modules and application directories contain the main scripts of your applica
 
 This module assumes that a `foo.js` file exists inside the `plugins` directory. This line will find that file and include it in the dashboard.js file that is compiled into the application directory. Notice that the file is referenced from the application folder so the `require` line needs the `../` prepended to the path. Also notice that you do not need to add the `.js` because Sprockets only compiles javascript files. In this way you can manage all the dependencies of a given module without including another script tag in your application.
 
-The plugins, lib, and test directories are just arbitrary folders for various script assets. The elements and models directories have special meaning to the modjs framework.
+The `plugins`, `lib`, and `spec` directories are just arbitrary folders for various script assets (although some of them contain resources you may want/need). Feel free to add your own folders to organize your scripts in whatever way you feel comfortable. BE SURE NOT TO REMOVE OR RENAME THE `lib` folder because it contains a copy of the mod.js library that get's compiled into the application file. The `elements` and `models` directories have special meaning to the modjs framework.
 
 ## Elements
 
