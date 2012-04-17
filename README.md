@@ -218,9 +218,61 @@ Now to update the dashboard.module file to use the new cahced selectors:
 
 Notice in `setup_tabbed_navigation`, `$('#navigation')` became `m.elements('navigation')` and in `open_external_links_in_new_tab`, `$('a')` became `m.elements('links')`. Before you start thinking that this is overkill consider what this allows us to do. If you decide to swap out jQuery for another framework like Prototype, there's one place to change all the selections for all modules. Even if you don't ever change frameworks, this elements method can be extended to provide extra functionality not provided by the framework. This wrapper technique helps us stay agile by abstracting the method of selection from the practice.
 
-## Models ##
+## Models
 
-Coming soon...
+Models in Mod.js are simply json structures that are owned by the module. Each module has a data attribute that is basically a key-value store of basic properties shared throughout the module. The idea behind this is similar to the elements abstraction. Many times we use several object literals to define configuration or other miscellaneous tasks. Models formalize these otherwise autonomous pieces of data. Here's how a using models in Mod.js works:
+
+```js
+(function(app) {
+    var m = app.add_module('dashboard');
+
+    //= require "../elements/dashboard.elements"
+    //= require "../models/dashboard.model"
+
+    m.actions = function() {
+        setup_tabbed_navigation();
+        open_external_links_in_new_tab();
+    };
+
+    ...
+})(myapp);
+```
+
+Now that the model is included in our module we can use the `dashboard.model.js` file to attach data to our module. Using the simple example of a plugin configuration object, we'll add configuration data to the `tabs` plugin being used by `setup_tabbed_navigation`:
+
+```js
+    m.set_data('tab_config', {
+        selectedTab: 2,
+        transition: 'fade'
+    });
+```
+
+This is a made up example of a configuration object used on the fictional `tabs` plugin used in `setup_tabbed_navigation`. Now that the data is defined in the model, we can access it in the module like so:
+
+```js
+    ...
+    function setup_tabbed_navigation() {
+        m.navigation.tabs(m.data.tab_config);
+    }
+    ...
+```
+
+This way we can reuse the `m.data.tab_config` in the module without having to redefine the object literal each time we use the plugin. We can even use jQuery's extend method to modify parts of the config while keeping the defaults. Using the previous example, we can easily use the `tab_config` data to setup another instance of the tab plugin with slightly different configuration:
+
+```js
+    ...
+    function setup_tabbed_navigation() {
+        m.navigation.tabs(m.data.tab_config);
+        m.some_other_tabs($.extend({ selectedTab: 1 }, m.data.tab_config));
+    }
+    ...
+```
+
+This way we can reuse as much as possible and are only definig the difference between the default and the custom plugin instantiation.
+
+## Conclusion
+
+That's pretty much Mod.js in a nutshell. It focuses on providing a solid base for modern javscript web development. The simple abstraction adhere's to best practices and let's ou focus on building features and not managing a mess of scripts and scopes. Happy scripting ;)
 
 ###contributing to modjs-architecture
  
