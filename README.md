@@ -272,7 +272,7 @@ This way we can reuse as much as possible and are only definig the difference be
 
 ## Conclusion
 
-That's pretty much Mod.js in a nutshell. It focuses on providing a solid base for modern javscript web development. The simple abstraction adhere's to best practices and let's ou focus on building features and not managing a mess of scripts and scopes. Happy scripting ;)
+That's pretty much Mod.js in a nutshell. It focuses on providing a solid base for modern javscript web development. The simple abstraction adhere's to best practices and let's you focus on building features and not managing a mess of scripts and scopes. Happy scripting ;)
 
 ###contributing to modjs-architecture
  
