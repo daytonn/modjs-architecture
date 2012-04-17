@@ -68,7 +68,7 @@ Calling run will wait for the dom to be loaded and then call the actions method.
     })(myapp);
 ```
 
-    This probably looks similar to the code you write currently, Mod.js simply makes it formal. Let's take a tour through this module.
+This probably looks similar to the code you write currently, Mod.js simply makes it formal. Let's take a tour through this module.
 
 Notice that the entire module is wrapped in a closure. This creates a private scope specific to this module. Public methods and properties can be created by attaching them to the module, private properties and methods are simply defined inside the closure, with no connection to the global scope. Also notice that the application object is passed into the closure and aliased as `app`. This means if application name changes or you wish to copy this module into another application, you only need to change the name in one place. It also has the added advantage of being short when referencing the namespace.
 
