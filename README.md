@@ -68,6 +68,60 @@ Calling run will wait for the dom to be loaded and then call the actions method.
     })(myapp);
 ```
 
+    This probably looks similar to the code you write currently, Mod.js simply makes it formal. Let's take a tour through this module.
+
+Notice that the entire module is wrapped in a closure. This creates a private scope specific to this module. Public methods and properties can be created by attaching them to the module, private properties and methods are simply defined inside the closure, with no connection to the global scope. Also notice that the application object is passed into the closure and aliased as `app`. This means if application name changes or you wish to copy this module into another application, you only need to change the name in one place. It also has the added advantage of being short when referencing the namespace.
+
+Next is the module instantiation: `var m = app.add_module('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, we won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
+
+Next we see the `actions` method declaration. This is where we put all the code we wish to run when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If we wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
+
+```js
+    (function(app) {
+        var m = app.add_module('dashboard');
+
+        m.actions = function() {
+            m.setup_tabbed_navigation();
+            m.open_external_links_in_new_tab();
+        };
+
+        m.setup_tabbed_navigation = function() {
+            $('#navigation').tabs();
+        };
+
+        m.open_external_links_in_new_tab = function() {
+            var links = $('a');
+            var re_local = new RegExp(location.hostname);
+            var external_links = links.filter(function(i, link) {
+                if (is_defined($(link).attr('href'))) {
+                    if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
+                        return true;
+                    }
+                }
+            });
+            external_links.attr('target', '_blank');
+        }
+
+        m.run();
+    })(myapp);
+```
+
+    This makes these methods available publicly through the application namespace. For example, if we wanted to call the `open_external_links_in_new_tab` in another module, we could do the following:
+
+```js
+    (function(app){
+        var m = app.add_module('some_other_module');
+
+        m.actions = function() {
+            app.dashboard.open_external_links_in_new_tab();
+        }
+
+        m.run();
+    })(myapp);
+```
+
+You should avoid modules having knowledge of other modules, but it can be handy when solving certain kinds of problems. Most of the time you won't need too many publicly available methods so keeping them hidden to the global scope is a great idea.
+
 ###contributing to modjs-architecture
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
