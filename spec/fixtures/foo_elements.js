@@ -4,7 +4,7 @@
     //= require "../elements/foo_elements.elements"
 
     m.init = function() {
-        return this;
+        
     };
 
     m.init_when_ready();

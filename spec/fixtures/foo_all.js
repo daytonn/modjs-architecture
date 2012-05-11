@@ -6,7 +6,7 @@
     //= require "../models/foo_all.model"
 
     m.init = function() {
-        return this;
+        
     };
 
     m.init_when_ready();

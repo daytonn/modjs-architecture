@@ -4,7 +4,7 @@
     //= require "../models/foo_model.model"
 
     m.init = function() {
-        return this;
+        
     };
 
     m.init_when_ready();
