@@ -243,17 +243,11 @@ Mod.Module = (function() {
         this.name = name;
     }
 
-    Module.prototype.actions = function() {};
+    Module.prototype.init = function() {};
 
-    Module.prototype.run = function() {
+    Module.prototype.init_when_ready = function() {
         var mod = this;
-        this.dom.call_when_ready(function() {
-            mod.execute();
-        });
-    };
-
-    Module.prototype.execute = function() {
-        this.actions();
+        this.dom.call_when_ready(mod.init);
     };
 
     Module.prototype.elements = function(elements) {
@@ -301,8 +295,8 @@ Mod.Application = (function() {
             throw new Error("new Mod.Application(name): name is undefined");
         }
 
-        this.name = name
-    };
+        this.name = name;
+    }
 
     Application.prototype.add_module = function(name) {
         if (is_undefined(name)) {

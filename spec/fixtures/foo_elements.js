@@ -3,9 +3,10 @@
 
     //= require "../elements/foo_elements.elements"
 
-    m.actions = function() {
-        
-    }
+    m.init = function() {
+        return this;
+    };
 
-    m.run();
+    m.init_when_ready();
+
 })(myapp);

@@ -9,9 +9,10 @@
     //= require "../models/<%= arguments[1] %>.model"
 <% end %>
 
-    m.actions = function() {
+    m.init = function() {
         
-    }
+    };
 
-    m.run();
+    m.init_when_ready();
+
 })(<%= blueprint[:name] %>);

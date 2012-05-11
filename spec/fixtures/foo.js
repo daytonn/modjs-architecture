@@ -1,9 +1,10 @@
 (function(app) {
     var m = app.add_module("foo");
 
-    m.actions = function() {
-        
-    }
+    m.init = function() {
+        return this;
+    };
 
-    m.run();
+    m.init_when_ready();
+
 })(myapp);

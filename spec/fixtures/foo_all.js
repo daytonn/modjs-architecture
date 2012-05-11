@@ -5,9 +5,10 @@
 
     //= require "../models/foo_all.model"
 
-    m.actions = function() {
-        
-    }
+    m.init = function() {
+        return this;
+    };
 
-    m.run();
+    m.init_when_ready();
+
 })(myapp);

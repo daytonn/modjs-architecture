@@ -32,20 +32,20 @@ myapp.add_module('dashboard'); // creates myapp.dashboard module
 ## Modules
 Modules are the heart of a modjs application. They're not exactly controllers and they're not exactly classes but they share a lot of the same responsibilities as you'd expect from these classical constructs. Modules are based on the typical browser-based workflow. Wait for the DOM, when it's ready attach events, setup plugins, and ajax the shit out of it, etc.
 
-Mod.js modules encapsulate this common pattern and create a coherent way to design and create javascript solutions. Modules are only slightly more sophisticated than the application object itself. A modules two main method's are actions and run.
+Mod.js modules encapsulate this common pattern and create a coherent way to design and create javascript solutions. Modules are only slightly more sophisticated than the application object itself. A modules two main method's are init and init_when_ready.
 
-Calling run will wait for the dom to be loaded and then call the actions method. By default, the actions method does nothing. You will provide the code for the actions method. The actions method should follow the composed method pattern, a simple list of functions to call when the dom is ready. An example of a typical module looks something like this:
+Calling init_when_ready will wait for the dom to be loaded and then call the init method. By default, the init method does nothing. You will provide the code for the init method. The init method should follow the composed method pattern, a simple list of functions to call when the dom is ready. An example of a typical module looks something like this:
 
 ```js
 (function(app) {
     var m = app.add_module('dashboard');
 
-    m.actions = function() {
+    m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };
 
-    m.run();
+    m.init_when_ready();
 
     // Private methods
 
@@ -74,13 +74,13 @@ Notice that the entire module is wrapped in a closure. This creates a private sc
 
 Next is the module instantiation: `var m = app.add_module('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, you won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
 
-Next, see the `actions` method declaration. This is where to put all the code which runs when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If you wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
+Next, see the `init` method declaration. This is where to put all the code which runs when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If you wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
 
 ```js
 (function(app) {
     var m = app.add_module('dashboard');
 
-    m.actions = function() {
+    m.init = function() {
         m.setup_tabbed_navigation();
         m.open_external_links_in_new_tab();
     };
@@ -102,7 +102,7 @@ Next, see the `actions` method declaration. This is where to put all the code wh
         external_links.attr('target', '_blank');
     }
 
-    m.run();
+    m.init_when_ready();
 })(myapp);
 ```
 
@@ -112,11 +112,11 @@ This makes these methods available publicly through the application namespace. F
 (function(app){
     var m = app.add_module('some_other_module');
 
-    m.actions = function() {
+    m.init = function() {
         app.dashboard.open_external_links_in_new_tab();
     }
 
-    m.run();
+    m.init_when_ready();
 })(myapp);
 ```
 
@@ -159,7 +159,7 @@ In this day and age of javascript programming, it seems everyone starts with a D
 
     //= require "../elements/dashboard.elements"
 
-    m.actions = function() {
+    m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };
@@ -189,12 +189,12 @@ Now to update the dashboard.module file to use the new cahced selectors:
 (function(app) {
     var m = app.add_module('dashboard');
 
-    m.actions = function() {
+    m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };
 
-    m.run();
+    m.init_when_ready();
 
     // Private methods
 
@@ -229,7 +229,7 @@ Models in Mod.js are simply json structures that are owned by the module. Each m
     //= require "../elements/dashboard.elements"
     //= require "../models/dashboard.model"
 
-    m.actions = function() {
+    m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };

@@ -34,16 +34,8 @@ describe("Mod.Module", function() {
         expect(module.data.three).toEqual('three');
     });
 
-    it("should have an actions method", function() {
-        expect(module.actions).toBeTruthy();
-    });
-
-    it("should have an execute method to call the actions", function() {
-        module.actions = function() {
-            this.set_data('actions_did_run', true);
-        };
-        module.execute();
-        expect(module.data.actions_did_run).toBeTruthy();
+    it("should have an init method", function() {
+        expect(module.init).toBeTruthy();
     });
 
     it("should have an elements method to cache DOM elements", function() {
@@ -67,10 +59,11 @@ describe("Mod.Module", function() {
     });
 
     it("should run the execute method when the dom is ready", function() {
-        module.actions = function() {
-            this.set_data('actions_did_run', true);
-            expect(module.data.actions_did_run).toBeTruthy();
+        module.init = function() {
+            this.set_data('init_did_run', true);
+            expect(module.data.init_did_run).toBeTruthy();
         };
-        module.run();
+
+        module.init_when_ready();
     });
 });
