@@ -68,4 +68,12 @@ task :travis do
   end
 end
 
+namespace :docs do
+  task :build do
+    src_dir = File.expand_path('lib/modjs-architecture')
+    puts %x{docco #{src_dir}/core/*.js #{src_dir}/extensions/*.js #{src_dir}/helpers/*.js}
+    puts "Docco docs built successfully!"
+  end
+end
+
 task :default => 'travis'
