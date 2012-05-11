@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "modjs-architecture"
-  s.version = "0.3.5"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
-  s.date = "2012-04-14"
+  s.date = "2012-05-11"
   s.description = "Mod.js is a modular javascript library that provides a base application strucure to build large javascript applications. Mod.js is designed to work with architecture.js."
   s.email = "daytonn@gmail.com"
   s.extra_rdoc_files = [
@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "VERSION",
-    "foo.js",
     "lib/modjs-architecture.rb",
     "lib/modjs-architecture/core/application.js",
     "lib/modjs-architecture/core/dom.js",
