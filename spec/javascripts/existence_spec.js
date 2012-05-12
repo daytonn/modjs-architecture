@@ -35,80 +35,80 @@ describe("Mod.js", function() {
       zero = 0,
       pattern = /regex/;
 
-  it("should test for existence with is_defined", function() {
-    expect(is_defined).toBeTruthy();
-    expect(is_defined(undef)).toBeFalsy();
-    expect(is_defined(empty_string)).toBeTruthy();
+  it("should test for existence with isDefined", function() {
+    expect(isDefined).toBeTruthy();
+    expect(isDefined(undef)).toBeFalsy();
+    expect(isDefined(empty_string)).toBeTruthy();
   });
 
-  it("should test for existence with is_undefined", function() {
-    expect(is_undefined).toBeTruthy();
-    expect(is_undefined(undef)).toBeTruthy();
-    expect(is_undefined(empty_string)).toBeFalsy();
+  it("should test for existence with isUndefined", function() {
+    expect(isUndefined).toBeTruthy();
+    expect(isUndefined(undef)).toBeTruthy();
+    expect(isUndefined(empty_string)).toBeFalsy();
   });
 
-  it("should check for strict types with is_typeof", function() {
-    expect(is_typeof).toBeTruthy();
-    expect(is_typeof(String, empty_string)).toBeTruthy();
-    expect(is_typeof(Array, empty_array)).toBeTruthy();
-    expect(is_typeof(CustomClass, custom_object)).toBeTruthy();
+  it("should check for strict types with isTypeof", function() {
+    expect(isTypeof).toBeTruthy();
+    expect(isTypeof(String, empty_string)).toBeTruthy();
+    expect(isTypeof(Array, empty_array)).toBeTruthy();
+    expect(isTypeof(CustomClass, custom_object)).toBeTruthy();
   });
 
-  it("should test for numeric values with is_numeric", function() {
-    expect(is_numeric(neg_int_string)).toBeTruthy();
-    expect(is_numeric(zero_string)).toBeTruthy();
-    expect(is_numeric(number)).toBeTruthy();
-    expect(is_numeric(neg_int)).toBeTruthy();
-    expect(is_numeric(zero)).toBeTruthy();
-    expect(is_numeric(oct_int_string)).toBeTruthy();
-    expect(is_numeric(oct_int)).toBeTruthy();
-    expect(is_numeric(hex_int)).toBeTruthy();
-    expect(is_numeric(neg_float)).toBeTruthy();
-    expect(is_numeric(pos_float)).toBeTruthy();
-    expect(is_numeric(exp)).toBeTruthy();
-    expect(is_numeric(exp_string)).toBeTruthy();
+  it("should test for numeric values with isNumeric", function() {
+    expect(isNumeric(neg_int_string)).toBeTruthy();
+    expect(isNumeric(zero_string)).toBeTruthy();
+    expect(isNumeric(number)).toBeTruthy();
+    expect(isNumeric(neg_int)).toBeTruthy();
+    expect(isNumeric(zero)).toBeTruthy();
+    expect(isNumeric(oct_int_string)).toBeTruthy();
+    expect(isNumeric(oct_int)).toBeTruthy();
+    expect(isNumeric(hex_int)).toBeTruthy();
+    expect(isNumeric(neg_float)).toBeTruthy();
+    expect(isNumeric(pos_float)).toBeTruthy();
+    expect(isNumeric(exp)).toBeTruthy();
+    expect(isNumeric(exp_string)).toBeTruthy();
 
-    expect(is_numeric(empty_string)).toBeFalsy();
-    expect(is_numeric(whitespace)).toBeFalsy();
-    expect(is_numeric(tabs)).toBeFalsy();
-    expect(is_numeric(alpha_num)).toBeFalsy();
-    expect(is_numeric(alpha)).toBeFalsy();
-    expect(is_numeric(bool_true)).toBeFalsy();
-    expect(is_numeric(bool_false)).toBeFalsy();
-    expect(is_numeric(mix_string_num)).toBeFalsy();
-    expect(is_numeric(NaN)).toBeFalsy();
-    expect(is_numeric(Infinity)).toBeFalsy();
-    expect(is_numeric(Number.POSITIVE_INFINITY)).toBeFalsy();
-    expect(is_numeric(Number.NEGATIVE_INFINITY)).toBeFalsy();
-    expect(is_numeric(date)).toBeFalsy();
-    expect(is_numeric(obj)).toBeFalsy();
-    expect(is_numeric(func)).toBeFalsy();
+    expect(isNumeric(empty_string)).toBeFalsy();
+    expect(isNumeric(whitespace)).toBeFalsy();
+    expect(isNumeric(tabs)).toBeFalsy();
+    expect(isNumeric(alpha_num)).toBeFalsy();
+    expect(isNumeric(alpha)).toBeFalsy();
+    expect(isNumeric(bool_true)).toBeFalsy();
+    expect(isNumeric(bool_false)).toBeFalsy();
+    expect(isNumeric(mix_string_num)).toBeFalsy();
+    expect(isNumeric(NaN)).toBeFalsy();
+    expect(isNumeric(Infinity)).toBeFalsy();
+    expect(isNumeric(Number.POSITIVE_INFINITY)).toBeFalsy();
+    expect(isNumeric(Number.NEGATIVE_INFINITY)).toBeFalsy();
+    expect(isNumeric(date)).toBeFalsy();
+    expect(isNumeric(obj)).toBeFalsy();
+    expect(isNumeric(func)).toBeFalsy();
   });
 
-  it("should test for strings with is_string", function() {
-    expect(is_string).toBeTruthy();
-    expect(is_string(empty_string)).toBeTruthy();
-    expect(is_string(empty_array)).toBeFalsy();
-    expect(is_string(custom_object)).toBeFalsy();
+  it("should test for strings with isString", function() {
+    expect(isString).toBeTruthy();
+    expect(isString(empty_string)).toBeTruthy();
+    expect(isString(empty_array)).toBeFalsy();
+    expect(isString(custom_object)).toBeFalsy();
   });
 
-  it("should test for arrays with is_array", function() {
-    expect(is_array).toBeTruthy();
-    expect(is_array(empty_array)).toBeTruthy();
-    expect(is_array(empty_string)).toBeFalsy();
+  it("should test for arrays with isArray", function() {
+    expect(isArray).toBeTruthy();
+    expect(isArray(empty_array)).toBeTruthy();
+    expect(isArray(empty_string)).toBeFalsy();
   });
 
-  it("should test for numbers with is_number", function() {
-    expect(is_number).toBeTruthy();
-    expect(is_number(number)).toBeTruthy();
-    expect(is_number(number_string)).toBeFalsy();
-    expect(is_number(empty_string)).toBeFalsy();
+  it("should test for numbers with isNumber", function() {
+    expect(isNumber).toBeTruthy();
+    expect(isNumber(number)).toBeTruthy();
+    expect(isNumber(number_string)).toBeFalsy();
+    expect(isNumber(empty_string)).toBeFalsy();
   });
 
-  it("should test for date objects with is_date", function() {
-    expect(is_date).toBeTruthy();
-    expect(is_date(date)).toBeTruthy();
-    expect(is_date(empty_string)).toBeFalsy();
+  it("should test for date objects with isDate", function() {
+    expect(isDate).toBeTruthy();
+    expect(isDate(date)).toBeTruthy();
+    expect(isDate(empty_string)).toBeFalsy();
   });
 
   it("should test for boolean values with is_bool", function() {
@@ -119,25 +119,25 @@ describe("Mod.js", function() {
     expect(is_bool(zero)).toBeFalsy();
   });
 
-  it("should test for RegEx objects with is_regex", function() {
-    expect(is_regex).toBeTruthy();
-    expect(is_regex(pattern)).toBeTruthy();
-    expect(is_regex(empty_string)).toBeFalsy();
+  it("should test for RegEx objects with isRegExp", function() {
+    expect(isRegExp).toBeTruthy();
+    expect(isRegExp(pattern)).toBeTruthy();
+    expect(isRegExp(empty_string)).toBeFalsy();
   });
 
-  it("should test for emptiness with is_empty", function() {
-    expect(is_empty).toBeTruthy();
-    expect(is_empty(empty_string)).toBeTruthy();
-    expect(is_empty(empty_array)).toBeTruthy();
-    expect(is_empty(array)).toBeFalsy();
-    expect(is_empty(string)).toBeFalsy();
+  it("should test for emptiness with isEmpty", function() {
+    expect(isEmpty).toBeTruthy();
+    expect(isEmpty(empty_string)).toBeTruthy();
+    expect(isEmpty(empty_array)).toBeTruthy();
+    expect(isEmpty(array)).toBeFalsy();
+    expect(isEmpty(string)).toBeFalsy();
   });
 
-  it("should test for emptiness with is_not_empty", function() {
-    expect(is_not_empty).toBeTruthy();
-    expect(is_not_empty(empty_string)).toBeFalsy();
-    expect(is_not_empty(empty_array)).toBeFalsy();
-    expect(is_not_empty(array)).toBeTruthy();
-    expect(is_not_empty(string)).toBeTruthy();
+  it("should test for emptiness with isNotEmpty", function() {
+    expect(isNotEmpty).toBeTruthy();
+    expect(isNotEmpty(empty_string)).toBeFalsy();
+    expect(isNotEmpty(empty_array)).toBeFalsy();
+    expect(isNotEmpty(array)).toBeTruthy();
+    expect(isNotEmpty(string)).toBeTruthy();
   });
 });

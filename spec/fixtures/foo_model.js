@@ -1,5 +1,5 @@
 (function(app) {
-    var m = app.add_module("foo_model");
+    var m = app.addModule("foo_model");
 
     //= require "../models/foo_model.model"
 
@@ -7,6 +7,6 @@
         
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
 })(myapp);

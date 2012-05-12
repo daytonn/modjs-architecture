@@ -1,5 +1,5 @@
 (function(app) {
-    var m = app.add_module("foo_elements");
+    var m = app.addModule("foo_elements");
 
     //= require "../elements/foo_elements.elements"
 
@@ -7,6 +7,6 @@
         
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
 })(myapp);

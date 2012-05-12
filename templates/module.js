@@ -1,5 +1,5 @@
 (function(app) {
-    var m = app.add_module("<%= arguments[1].gsub(/^_/, '') %>");
+    var m = app.addModule("<%= arguments[1].gsub(/^_/, '') %>");
 <% if options[:e] %>
 
     //= require "../elements/<%= arguments[1] %>.elements"
@@ -13,6 +13,6 @@
         
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
 })(<%= blueprint[:name] %>);

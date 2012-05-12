@@ -23,29 +23,29 @@ This will create the myapp application in the example folder (creating the folde
 ## The Application object
 Mod.js creates an application object which acts as a namespace for your entire application. This global variable will encapsulate most of the code in your web application and act as the central hub of your modules.
 
-The application object really couldn't be much simpler. It has one method and one property. The name property is just a string that identifys the object. It's only method is add_module, which creates a new module, adds that module as a property, and returns a reference to the new module. This method's only purpose is to attach a new module to the global namespace.
+The application object really couldn't be much simpler. It has one method and one property. The name property is just a string that identifys the object. It's only method is addModule, which creates a new module, adds that module as a property, and returns a reference to the new module. This method's only purpose is to attach a new module to the global namespace.
 
 ```js
-myapp.add_module('dashboard'); // creates myapp.dashboard module
+myapp.addModule('dashboard'); // creates myapp.dashboard module
 ```
 
 ## Modules
 Modules are the heart of a modjs application. They're not exactly controllers and they're not exactly classes but they share a lot of the same responsibilities as you'd expect from these classical constructs. Modules are based on the typical browser-based workflow. Wait for the DOM, when it's ready attach events, setup plugins, and ajax the shit out of it, etc.
 
-Mod.js modules encapsulate this common pattern and create a coherent way to design and create javascript solutions. Modules are only slightly more sophisticated than the application object itself. A modules two main method's are init and init_when_ready.
+Mod.js modules encapsulate this common pattern and create a coherent way to design and create javascript solutions. Modules are only slightly more sophisticated than the application object itself. A modules two main method's are init and initWhenReady.
 
-Calling init_when_ready will wait for the dom to be loaded and then call the init method. By default, the init method does nothing. You will provide the code for the init method. The init method should follow the composed method pattern, a simple list of functions to call when the dom is ready. An example of a typical module looks something like this:
+Calling initWhenReady will wait for the dom to be loaded and then call the init method. By default, the init method does nothing. You will provide the code for the init method. The init method should follow the composed method pattern, a simple list of functions to call when the dom is ready. An example of a typical module looks something like this:
 
 ```js
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
     // Private methods
 
@@ -57,7 +57,7 @@ Calling init_when_ready will wait for the dom to be loaded and then call the ini
         var links = $('a');
         var re_local = new RegExp(location.hostname);
         var external_links = links.filter(function(i, link) {
-            if (is_defined($(link).attr('href'))) {
+            if (isDefined($(link).attr('href'))) {
                 if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
                     return true;
                 }
@@ -72,13 +72,13 @@ This probably looks similar to the code you write currently, Mod.js simply makes
 
 Notice that the entire module is wrapped in a closure. This creates a private scope specific to this module. Public methods and properties can be created by attaching them to the module, private properties and methods are simply defined inside the closure, with no connection to the global scope. Also notice that the application object is passed into the closure and aliased as `app`. This means if application name changes or you wish to copy this module into another application, you only need to change the name in one place. It also has the added advantage of being short when referencing the namespace.
 
-Next is the module instantiation: `var m = app.add_module('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, you won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
+Next is the module instantiation: `var m = app.addModule('dashboard')`. This line adds a new Mod.js module to the application and returns a reference to that module to be stored as `m`. This serves multiple purposes. For one, it provides a concrete reference to the current module, you won't have to juggle the `this` variable throughout the code. It also serves to attach public methods and properties to the module's scope.
 
 Next, see the `init` method declaration. This is where to put all the code which runs when the DOM is ready to be manipulated. Notice that the `setup_tabbed_navigation` method and the `open_external_links_in_new_tab` method are both defined as private methods inside the closure. By using this pattern, only the `dashboard` module has access to these methods. If you wanted to make these methods publicly accessible, simply add the methods to the module namespace. The previous module re-written with public methods would look like this:
 
 ```js
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     m.init = function() {
         m.setup_tabbed_navigation();
@@ -93,7 +93,7 @@ Next, see the `init` method declaration. This is where to put all the code which
         var links = $('a');
         var re_local = new RegExp(location.hostname);
         var external_links = links.filter(function(i, link) {
-            if (is_defined($(link).attr('href'))) {
+            if (isDefined($(link).attr('href'))) {
                 if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
                     return true;
                 }
@@ -102,7 +102,7 @@ Next, see the `init` method declaration. This is where to put all the code which
         external_links.attr('target', '_blank');
     }
 
-    m.init_when_ready();
+    m.initWhenReady();
 })(myapp);
 ```
 
@@ -110,13 +110,13 @@ This makes these methods available publicly through the application namespace. F
 
 ```js
 (function(app){
-    var m = app.add_module('some_other_module');
+    var m = app.addModule('some_other_module');
 
     m.init = function() {
         app.dashboard.open_external_links_in_new_tab();
     }
 
-    m.init_when_ready();
+    m.initWhenReady();
 })(myapp);
 ```
 
@@ -139,7 +139,7 @@ The modules and application directories contain the main scripts of your applica
 //= require "../plugins/foo"
 
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     ...
 })(myapp);
@@ -155,7 +155,7 @@ In this day and age of javascript programming, it seems everyone starts with a D
 
 ```js
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     //= require "../elements/dashboard.elements"
 
@@ -187,14 +187,14 @@ Now to update the dashboard.module file to use the new cahced selectors:
 
 ```js
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     m.init = function() {
         setup_tabbed_navigation();
         open_external_links_in_new_tab();
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
     // Private methods
 
@@ -205,7 +205,7 @@ Now to update the dashboard.module file to use the new cahced selectors:
     function open_external_links_in_new_tab() {
         var re_local = new RegExp(location.hostname);
         var external_links = m.elements('links').filter(function(i, link) {
-            if (is_defined($(link).attr('href'))) {
+            if (isDefined($(link).attr('href'))) {
                 if (href.match(/^https?\:\/\//) && !re_local.test(href)) {
                     return true;
                 }
@@ -224,7 +224,7 @@ Models in Mod.js are simply json structures that are owned by the module. Each m
 
 ```js
 (function(app) {
-    var m = app.add_module('dashboard');
+    var m = app.addModule('dashboard');
 
     //= require "../elements/dashboard.elements"
     //= require "../models/dashboard.model"
@@ -241,7 +241,7 @@ Models in Mod.js are simply json structures that are owned by the module. Each m
 Now that the model is included in our module we can use the `dashboard.model.js` file to attach data to our module. Using the simple example of a plugin configuration object, we'll add configuration data to the `tabs` plugin being used by `setup_tabbed_navigation`:
 
 ```js
-    m.set_data('tab_config', {
+    m.setData('tab_config', {
         selectedTab: 2,
         transition: 'fade'
     });

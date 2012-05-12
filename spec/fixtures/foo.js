@@ -1,10 +1,10 @@
 (function(app) {
-    var m = app.add_module("foo");
+    var m = app.addModule("foo");
 
     m.init = function() {
         
     };
 
-    m.init_when_ready();
+    m.initWhenReady();
 
 })(myapp);

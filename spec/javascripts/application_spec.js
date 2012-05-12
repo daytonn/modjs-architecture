@@ -15,7 +15,7 @@ describe("Mod.Application", function() {
 
   it("should have a module factory method", function() {
     var app = new Mod.Application('app');
-    app.add_module('foo');
+    app.addModule('foo');
     expect(app.foo).toBeTruthy();
     expect(app.foo.name).toEqual('foo');
   });

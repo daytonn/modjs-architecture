@@ -14,12 +14,12 @@ describe("Mod.DOM", function() {
     });
 
     it("should add an element to the cache", function() {
-        dom.add_element('foo', document.getElementById('body'));
+        dom.addElement('foo', document.getElementById('body'));
         expect(dom.cache.foo).toEqual(document.getElementById('body'));
     });
 
     it("should add a hash of elements to the cache", function() {
-        dom.add_elements({
+        dom.addElements({
             bar: document.getElementsByTagName('html')[0],
             baz: document.getElementsByTagName('head')[0]
         });
@@ -28,16 +28,16 @@ describe("Mod.DOM", function() {
         expect(dom.cache.baz).toEqual(document.getElementsByTagName('head')[0]);
     });
 
-    it("should have an add_event method", function() {
-        expect(dom.add_event).toBeTruthy();
+    it("should have an addEvent method", function() {
+        expect(dom.addEvent).toBeTruthy();
     });
 
-    it("should have a remove_event method", function() {
-        expect(dom.remove_event).toBeTruthy();
+    it("should have a removeEvent method", function() {
+        expect(dom.removeEvent).toBeTruthy();
     });
 
-    it("should have a call_when_ready method", function() {
-        dom.call_when_ready(function() {
+    it("should have a callWhenReady method", function() {
+        dom.callWhenReady(function() {
             var body = document.getElementsByTagName('body')[0],
                 h1 = document.createElement('h1');
 

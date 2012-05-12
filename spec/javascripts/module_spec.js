@@ -23,12 +23,12 @@ describe("Mod.Module", function() {
         expect(module.data).toEqual({});
     });
 
-    it("should add data with set_data", function() {
-        module.set_data({
+    it("should add data with setData", function() {
+        module.setData({
             one: 'one',
             two: 'two'
         });
-        module.set_data('three', 'three');
+        module.setData('three', 'three');
         expect(module.data.one).toEqual('one');
         expect(module.data.two).toEqual('two');
         expect(module.data.three).toEqual('three');
@@ -60,10 +60,10 @@ describe("Mod.Module", function() {
 
     it("should run the execute method when the dom is ready", function() {
         module.init = function() {
-            this.set_data('init_did_run', true);
+            this.setData('init_did_run', true);
             expect(module.data.init_did_run).toBeTruthy();
         };
 
-        module.init_when_ready();
+        module.initWhenReady();
     });
 });
