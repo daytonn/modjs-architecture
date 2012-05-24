@@ -6,6 +6,7 @@ source "http://rubygems.org"
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 gem "architecture-js"
+gem "ejs"
 
 group :test do
   gem 'simplecov', :require => false
