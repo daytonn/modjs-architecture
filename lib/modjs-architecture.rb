@@ -79,10 +79,10 @@ module ModJS
       FileUtils.cp "#{ModJS::base_dir}/lib/modjs-architecture/jasmine/index.html", "#{@root}/spec/jasmine/"
     end
 
-    def update
+    def update(compress = false)
       read_config
       update_application_file
-      super
+      super(compress)
     end
 
     def compile_src_files
