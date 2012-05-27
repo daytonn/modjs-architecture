@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "modjs-architecture"
-  s.version = "0.4.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
-  s.date = "2012-05-11"
+  s.date = "2012-05-24"
   s.description = "Mod.js is a modular javascript library that provides a base application strucure to build large javascript applications. Mod.js is designed to work with architecture.js."
   s.email = "daytonn@gmail.com"
   s.extra_rdoc_files = [
@@ -45,9 +45,9 @@ Gem::Specification.new do |s|
     "lib/modjs-architecture/jasmine/jasmine.js",
     "lib/modjs-architecture/jasmine/jasmine_favicon.png",
     "lib/modjs-architecture/lib/mod.js",
-    "lib/modjs-architecture/modjs.architecture",
     "lib/modjs-architecture/modjs.blueprint",
     "lib/modjs-architecture/src/mod.js",
+    "lib/modjs-architecture/templates/templates.erb.js",
     "modjs-architecture.gemspec",
     "spec/fixtures/foo-elements.js",
     "spec/fixtures/foo.js",
@@ -58,8 +58,11 @@ Gem::Specification.new do |s|
     "spec/fixtures/myapp.architecture",
     "spec/fixtures/myapp.blueprint",
     "spec/fixtures/myapp.js",
+    "spec/fixtures/templates_compiled.js",
     "spec/fixtures/test.js",
+    "spec/fixtures/test.jst",
     "spec/fixtures/test.module.js",
+    "spec/fixtures/test_two.jst",
     "spec/fixtures/update.architecture",
     "spec/fixtures/update.blueprint",
     "spec/fixtures/update.js",
@@ -80,7 +83,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/daytonn/modjs-architecture"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.21"
+  s.rubygems_version = "1.8.24"
   s.summary = "Mod.js is an a la carte javascript framework"
 
   if s.respond_to? :specification_version then
@@ -88,6 +91,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<architecture-js>, [">= 0"])
+      s.add_runtime_dependency(%q<ejs>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
@@ -95,6 +99,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<architecture-js>, [">= 0"])
     else
       s.add_dependency(%q<architecture-js>, [">= 0"])
+      s.add_dependency(%q<ejs>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
@@ -103,6 +108,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<architecture-js>, [">= 0"])
+    s.add_dependency(%q<ejs>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])

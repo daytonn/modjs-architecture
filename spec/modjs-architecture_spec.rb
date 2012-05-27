@@ -13,7 +13,7 @@ describe ModJS::Blueprint do
     end
     
     it 'should have the correct directories' do
-      @project.directories.should == %w'application elements lib models modules plugins spec'
+      @project.directories.should == %w'application elements lib models modules plugins spec templates'
     end
   end
 
@@ -37,6 +37,7 @@ describe ModJS::Blueprint do
       File.exists?("#{TMP_DIR}/modules").should be_true
       File.exists?("#{TMP_DIR}/plugins").should be_true
       File.exists?("#{TMP_DIR}/spec").should be_true
+      File.exists?("#{TMP_DIR}/templates").should be_true
     end
 
     it 'should create the blueprint file' do
@@ -78,7 +79,8 @@ describe ModJS::Blueprint do
       FileUtils.rm_rf "#{TMP_DIR}/myapp.blueprint"
       FileUtils.cp "#{FIXTURES}/update.blueprint", "#{TMP_DIR}/myapp.blueprint"
       FileUtils.cp "#{FIXTURES}/test.module.js", "#{TMP_DIR}/modules/test.module.js"
-
+      FileUtils.cp "#{FIXTURES}/test.jst",  "#{TMP_DIR}/templates/test.jst"
+      FileUtils.cp "#{FIXTURES}/test_two.jst",  "#{TMP_DIR}/templates/test_two.jst"
       suppress_output do
         @project.update
       end
@@ -95,6 +97,12 @@ describe ModJS::Blueprint do
     it 'should compile the test module' do
       File.exists?("#{TMP_DIR}/application/test.js").should be_true
     end
+
+    it 'should compile .jst files into application/templates.js' do
+      File.exists?("#{TMP_DIR}/application/templates.js").should be_true
+      "#{TMP_DIR}/application/templates.js".should be_same_file_as "#{FIXTURES}/templates_compiled.js"
+    end
+
   end
 
 end
