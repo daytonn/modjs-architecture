@@ -84,12 +84,8 @@ module ModJS
     def update(compress = false)
       read_config
       update_application_file
-<<<<<<< HEAD
-      super(compress)
-=======
       compile_templates
-      super
->>>>>>> ec56d4829fd07199e800a42276d64e2b0ba38828
+      super(compress)
     end
 
     def compile_src_files
