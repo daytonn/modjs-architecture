@@ -47,7 +47,7 @@ module ModJS
       super
       copy_modjs_core_to_lib
       copy_spec_files
-      puts ArchitectureJS::Notification.added "#{@config[:build_dir]}/#{@config[:name]}.js created"
+      puts ArchitectureJS::Notification.added "#{@config[:build_dir]}/#{@config[:name].downcase}.js created"
     end
 
     def get_file_name(module_path)
@@ -58,7 +58,7 @@ module ModJS
     end
 
     def create_application_file
-      app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name]}.js"
+      app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name].downcase}.js"
       FileUtils.cp "#{ModJS::lib_dir}/mod.js", app_file
       File.open(app_file, 'a') { |f| f.write("\nvar #{@config[:name]} = new Mod.Application('#{@config[:name]}');") }
     end
@@ -96,7 +96,7 @@ module ModJS
     end
 
     def update_application_file
-      app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name]}.js"
+      app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name].downcase}.js"
 
       File.open(app_file, "w+") do |file|
         write_dependencies(file)
