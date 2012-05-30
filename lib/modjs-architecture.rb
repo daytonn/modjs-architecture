@@ -96,16 +96,24 @@ module ModJS
     end
 
     def update_application_file
+      tmp_file = write_temp_file
       app_file = "#{@root}/#{@config[:build_dir]}/#{@config[:name].downcase}.js"
 
-      File.open(app_file, "w+") do |file|
+      ArchitectureJS::Notification.log "#{app_file} updated"
+      compile_application_file tmp_file
+      FileUtils.mv tmp_file, app_file
+    end
+
+    def write_temp_file
+      tmp_name = rand(36**10).to_s(36)
+      tmp_file = "#{@root}/#{tmp_name}.js"
+
+      File.open(tmp_file, "w+") do |file|
         write_dependencies(file)
         write_core(file)
         write_autoload(file)
       end
-
-      ArchitectureJS::Notification.log "#{app_file} updated"
-      compile_application_file app_file
+      tmp_file
     end
 
     def write_dependencies(file)
@@ -120,7 +128,7 @@ module ModJS
     
     def write_core(file)
       file << "/*---------- ModJS ../lib/mod.js ----------*/\n"
-      file << "//= require \"../lib/mod.js\"\n\n"
+      file << "//= require \"lib/mod.js\"\n\n"
       file << "var #{@config[:name]} = new Mod.Application('#{@config[:name]}');\n\n"
     end
     
@@ -138,7 +146,7 @@ module ModJS
       sprockets = Sprockets::Secretary.new(
         root: ModJS::base_dir,
         asset_root: File.expand_path(@config[:asset_root], @root),
-        load_path: ['repository'],
+        load_path: ['repository', @root],
         source_files: [file],
         interpolate_constants: false
       )

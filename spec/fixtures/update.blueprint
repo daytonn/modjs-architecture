@@ -3,6 +3,6 @@ src_dir: modules
 build_dir: application
 asset_root: ../
 output: expanded
-dependencies: ["../modules/test.module"]
-autoload: ["../modules/test.module"]
+dependencies: ["modules/test.module"]
+autoload: ["modules/test.module", "modules/test2.module"]
 name: myapp
