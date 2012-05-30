@@ -157,7 +157,7 @@ module ModJS
       formatted_templates = format_templates(compiled_templates)
       template = ERB.new File.read("#{ModJS::base_dir}/lib/modjs-architecture/templates/templates.erb.js")
 
-      File.open("#{@root}/application/templates.js", "w+") do |f|
+      File.open("#{@root}/#{@config[:build_dir]}/templates.js", "w+") do |f|
         f << template.result(binding)
       end
     end
