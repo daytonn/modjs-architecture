@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "modjs-architecture"
-  s.version = "0.6.3"
+  s.version = "0.6.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dayton Nolan"]
@@ -55,15 +55,14 @@ Gem::Specification.new do |s|
     "spec/fixtures/foo_elements.js",
     "spec/fixtures/foo_model.js",
     "spec/fixtures/model_name.js",
-    "spec/fixtures/myapp.architecture",
     "spec/fixtures/myapp.blueprint",
     "spec/fixtures/myapp.js",
     "spec/fixtures/templates_compiled.js",
     "spec/fixtures/test.js",
     "spec/fixtures/test.jst",
     "spec/fixtures/test.module.js",
+    "spec/fixtures/test2.module.js",
     "spec/fixtures/test_two.jst",
-    "spec/fixtures/update.architecture",
     "spec/fixtures/update.blueprint",
     "spec/fixtures/update.js",
     "spec/javascripts/application_spec.js",
