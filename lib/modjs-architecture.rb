@@ -83,8 +83,8 @@ module ModJS
 
     def update(compress = false)
       read_config
-      update_application_file
       compile_templates
+      update_application_file templates_string
       super(compress)
     end
 
@@ -101,7 +101,7 @@ module ModJS
 
       ArchitectureJS::Notification.log "#{app_file} updated"
       compile_application_file tmp_file
-      FileUtils.mv tmp_file, app_file
+      FileUtils.cp tmp_file, app_file
     end
 
     def write_temp_file
@@ -109,9 +109,10 @@ module ModJS
       tmp_file = "#{@root}/#{tmp_name}.js"
 
       File.open(tmp_file, "w+") do |file|
-        write_dependencies(file)
-        write_core(file)
-        write_autoload(file)
+        write_dependencies file
+        write_core file
+        write_templates file
+        write_autoload file
       end
       tmp_file
     end
@@ -131,7 +132,11 @@ module ModJS
       file << "//= require \"lib/mod.js\"\n\n"
       file << "var #{@config[:name]} = new Mod.Application('#{@config[:name]}');\n\n"
     end
-    
+
+    def write_templates(file)
+      file << @compiled_templates
+    end
+
     def write_autoload(file)
       if @config[:autoload]
         @config[:autoload].each do |autoload|
@@ -160,13 +165,15 @@ module ModJS
     end
 
     def compile_templates
+      templates_string = ''
       app_name = @config[:name]
       compiled_templates = fetch_templates
       formatted_templates = format_templates(compiled_templates)
       template = ERB.new File.read("#{ModJS::base_dir}/lib/modjs-architecture/templates/templates.erb.js")
+      @compiled_templates = template.result(binding)
 
       File.open("#{@root}/#{@config[:build_dir]}/templates.js", "w+") do |f|
-        f << template.result(binding)
+        f << @compiled_templates
       end
     end
 
