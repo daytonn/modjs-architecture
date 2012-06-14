@@ -84,7 +84,7 @@ module ModJS
     def update(compress = false)
       read_config
       compile_templates
-      update_application_file templates_string
+      update_application_file
       super(compress)
     end
 
