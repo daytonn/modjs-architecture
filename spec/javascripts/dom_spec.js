@@ -10,7 +10,7 @@ describe("Mod.DOM", function() {
     });
 
     it("should have an is_ready property", function() {
-        expect(is_bool(dom.is_ready)).toBeTruthy();
+        expect(isBool(dom.is_ready)).toBeTruthy();
     });
 
     it("should add an element to the cache", function() {

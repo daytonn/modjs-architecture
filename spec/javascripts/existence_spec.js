@@ -111,12 +111,12 @@ describe("Mod.js", function() {
     expect(isDate(empty_string)).toBeFalsy();
   });
 
-  it("should test for boolean values with is_bool", function() {
-    expect(is_bool).toBeTruthy();
-    expect(is_bool(bool_true)).toBeTruthy();
-    expect(is_bool(bool_false)).toBeTruthy();
-    expect(is_bool(one)).toBeFalsy();
-    expect(is_bool(zero)).toBeFalsy();
+  it("should test for boolean values with isBool", function() {
+    expect(isBool).toBeTruthy();
+    expect(isBool(bool_true)).toBeTruthy();
+    expect(isBool(bool_false)).toBeTruthy();
+    expect(isBool(one)).toBeFalsy();
+    expect(isBool(zero)).toBeFalsy();
   });
 
   it("should test for RegEx objects with isRegExp", function() {

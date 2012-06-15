@@ -45,7 +45,7 @@ isDate = function(suspect) {
   return isTypeof(Date, suspect);
 };
 
-is_bool = function(suspect) {
+isBool = function(suspect) {
   return isTypeof(Boolean, suspect);
 };
 
