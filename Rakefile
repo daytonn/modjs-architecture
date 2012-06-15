@@ -55,6 +55,7 @@ begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
 rescue LoadError
+  ENV["JASMINE_BROWSER"] = :chrome
   task :jasmine do
     abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
   end

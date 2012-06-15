@@ -101,12 +101,11 @@ module ModJS
 
       ArchitectureJS::Notification.log "#{app_file} updated"
       compile_application_file tmp_file
-      FileUtils.cp tmp_file, app_file
+      FileUtils.mv tmp_file, app_file
     end
 
     def write_temp_file
-      tmp_name = rand(36**10).to_s(36)
-      tmp_file = "#{@root}/#{tmp_name}.js"
+      tmp_file = "#{@root}/#{@config[:name].downcase}.js"
 
       File.open(tmp_file, "w+") do |file|
         write_dependencies file

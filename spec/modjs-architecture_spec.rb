@@ -96,6 +96,10 @@ describe ModJS::Blueprint do
       File.exists?("#{TMP_DIR}/application/myapp.js").should be_true
     end
 
+    it "should have moved the application file from the root folder" do
+      File.exists?("#{TMP_DIR}/myapp.js").should_not be_true
+    end
+
     it 'should compile the test module' do
       File.exists?("#{TMP_DIR}/application/test.js").should be_true
     end
