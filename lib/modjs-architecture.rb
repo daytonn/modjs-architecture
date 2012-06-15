@@ -1,4 +1,4 @@
-require 'EJS'
+require 'ejs'
 
 module ArchitectureJS
   class Generator
