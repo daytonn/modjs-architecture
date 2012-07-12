@@ -80,8 +80,6 @@ describe ModJS::Blueprint do
       FileUtils.cp "#{FIXTURES}/update.blueprint", "#{TMP_DIR}/myapp.blueprint"
       FileUtils.cp "#{FIXTURES}/test.module.js", "#{TMP_DIR}/modules/test.module.js"
       FileUtils.cp "#{FIXTURES}/test2.module.js", "#{TMP_DIR}/modules/test2.module.js"
-      FileUtils.cp "#{FIXTURES}/test.jst",  "#{TMP_DIR}/templates/test.jst"
-      FileUtils.cp "#{FIXTURES}/test_two.jst",  "#{TMP_DIR}/templates/test_two.jst"
 
       suppress_output do
         @project.update
@@ -102,11 +100,6 @@ describe ModJS::Blueprint do
 
     it 'should compile the test module' do
       File.exists?("#{TMP_DIR}/application/test.js").should be_true
-    end
-
-    it 'should compile .jst files into application/templates.js' do
-      File.exists?("#{TMP_DIR}/application/templates.js").should be_true
-      "#{TMP_DIR}/application/templates.js".should be_same_file_as "#{FIXTURES}/templates_compiled.js"
     end
 
   end

@@ -83,7 +83,6 @@ module ModJS
 
     def update(compress = false)
       read_config
-      compile_templates
       update_application_file
       super(compress)
     end
@@ -110,7 +109,6 @@ module ModJS
       File.open(tmp_file, "w+") do |file|
         write_dependencies file
         write_core file
-        write_templates file
         write_autoload file
       end
       tmp_file
@@ -130,10 +128,6 @@ module ModJS
       file << "/*---------- ModJS ../lib/mod.js ----------*/\n"
       file << "//= require \"lib/mod.js\"\n\n"
       file << "var #{@config[:name]} = new Mod.Application('#{@config[:name]}');\n\n"
-    end
-
-    def write_templates(file)
-      file << @compiled_templates
     end
 
     def write_autoload(file)
@@ -161,34 +155,6 @@ module ModJS
     rescue Exception => error
       @errors = true
       puts ArchitectureJS::Notification.error "Sprockets error: #{error.message}"
-    end
-
-    def compile_templates
-      templates_string = ''
-      app_name = @config[:name]
-      compiled_templates = fetch_templates
-      formatted_templates = format_templates(compiled_templates)
-      template = ERB.new File.read("#{ModJS::base_dir}/lib/modjs-architecture/templates/templates.erb.js")
-      @compiled_templates = template.result(binding)
-
-      File.open("#{@root}/#{@config[:build_dir]}/templates.js", "w+") do |f|
-        f << @compiled_templates
-      end
-    end
-
-    def fetch_templates
-      templates = {}
-      Dir.glob("#{@root}/templates/**/*.jst").each do |template|
-        name = File.basename(template).gsub(/\.jst$/, '')
-        templates[name] = EJS.compile(File.read(template))
-      end
-      templates
-    end
-
-    def format_templates(compiled_templates)
-      formatted_templates = compiled_templates.map do |name, function|
-        "\"#{name}\": #{function}"
-      end
     end
 
   end # class Project
