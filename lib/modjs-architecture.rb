@@ -39,7 +39,6 @@ module ModJS
 
       super(@config, root)
 
-      add_templates "#{ModJS::base_dir}/templates"
       @directories = %w'application elements lib models modules plugins spec templates'
     end
 
