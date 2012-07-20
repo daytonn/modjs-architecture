@@ -104,11 +104,6 @@ describe ModJS::Blueprint do
       File.exists?("#{TMP_DIR}/application/test.js").should be_true
     end
 
-    it 'should compile .jst files into application/templates.js' do
-      File.exists?("#{TMP_DIR}/application/templates.js").should be_true
-      "#{TMP_DIR}/application/templates.js".should be_same_file_as "#{FIXTURES}/templates_compiled.js"
-    end
-
   end
 
 end
