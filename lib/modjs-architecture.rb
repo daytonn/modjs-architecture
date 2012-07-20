@@ -108,7 +108,6 @@ module ModJS
       File.open(tmp_file, "w+") do |file|
         write_dependencies file
         write_core file
-        write_templates file
         write_autoload file
       end
       tmp_file
@@ -128,10 +127,6 @@ module ModJS
       file << "/*---------- ModJS ../lib/mod.js ----------*/\n"
       file << "//= require \"lib/mod.js\"\n\n"
       file << "var #{@config[:name]} = new Mod.Application('#{@config[:name]}');\n\n"
-    end
-
-    def write_templates(file)
-      file << @compiled_templates
     end
 
     def write_autoload(file)
