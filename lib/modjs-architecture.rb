@@ -1,27 +1,14 @@
-require 'ejs'
-
-module ArchitectureJS
-  class Generator
-    def generate_file(filename, template, path = nil)
-      path ||= File.expand_path(Dir.getwd)
-      filename = filename.gsub(/\.js$/, '.module.js')
-      File.open("#{path}/#{filename}", "w+") { |f| f.write template }
-      puts ArchitectureJS::Notification.added "#{filename} added" if File.exists?("#{path}/#{filename}")
-    end
-  end
-end
-
 module ModJS
 
-  def base_dir
-    File.expand_path("../..", __FILE__)
-  end
+  class << self
+    def base_dir
+      File.expand_path("../..", __FILE__)
+    end
 
-  def lib_dir
-    "#{ModJS::base_dir}/lib/modjs-architecture/lib"
+    def lib_dir
+      "#{ModJS::base_dir}/lib/modjs-architecture/lib"
+    end
   end
-
-  module_function :base_dir, :lib_dir
 
   class Blueprint < ArchitectureJS::Blueprint
     # this line adds the framework to ArchitectureJS
