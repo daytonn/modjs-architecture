@@ -17,4 +17,5 @@ group :development do
   gem "bundler"
   gem "jeweler", "~> 1.8.3"
   gem "jasmine"
+  gem "nyan-cat-formatter"
 end
